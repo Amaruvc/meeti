@@ -3,6 +3,7 @@ const router = require("./routes");
 const db = require("./config/db");
 const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
+require("./models/Usuarios");
 
 db.sync()
   .then(() => console.log("BD Conectada"))
