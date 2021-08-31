@@ -56,6 +56,29 @@ exports.crearNuevaCuenta = async (req, res) => {
   }
 };
 
+//Confirma la cuenta del usuario
+exports.confirmarCuenta = async (req, res, next) => {
+  //Verificar que el usuario existe
+  const usuario = await Usuarios.findOne({
+    where: { email: req.params.correo },
+  });
+
+  //Si no existe, redireccionar
+
+  if (!usuario) {
+    req.flash("error", "No existe esa cuenta");
+    res.redirect("/crear-cuenta");
+    return next();
+  }
+
+  //Si existe, confirmar suscripción y redireccionar
+  usuario.activo = 1;
+  await usuario.save();
+
+  req.flash("exito", "La cuenta se ha confirmado, ya puedes iniciar sesión");
+  res.redirect("/iniciar-sesion");
+};
+
 //Formulario para iniciar sesion
 exports.formIniciarSesion = async (req, res) => {
   res.render("iniciar-sesion", {

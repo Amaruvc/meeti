@@ -7,6 +7,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const expressLayouts = require("express-ejs-layouts");
 const expressValidator = require("express-validator");
+const passport = require("./config/passport");
 
 //Configuración y modelos
 const db = require("./config/db");
@@ -52,6 +53,10 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+//iniciarlizar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Agrega flash messages
 app.use(flash());
